@@ -1,20 +1,24 @@
 import {
   ArrowRight,
   ChevronDown,
-  Code2,
   DownloadCloudIcon,
   ExternalLink,
   Github,
-  Layers,
   Linkedin,
   Mail,
   Menu,
   Phone,
-  Rocket,
   X,
-  Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import {
+  AllowedColor,
+  experiences,
+  hoverGradient,
+  projects,
+  skills,
+  textGradient,
+} from "./lib/constants";
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,118 +37,6 @@ export default function Portfolio() {
       window.removeEventListener("mousemove", handleMouse);
     };
   }, []);
-
-  const skills = [
-    {
-      cat: "Frontend",
-      items: ["Next.js", "React", "Vue.js", "TypeScript", "TailwindCSS"],
-      icon: Code2,
-      color: "from-cyan-500 to-blue-500",
-    },
-    {
-      cat: "State & Data",
-      items: ["Redux Toolkit", "Zustand", "React Query", "GraphQL"],
-      icon: Layers,
-      color: "from-violet-500 to-purple-500",
-    },
-    {
-      cat: "Backend",
-      items: ["Node.js", "Prisma", "Supabase", "PostgreSQL"],
-      icon: Rocket,
-      color: "from-orange-500 to-red-500",
-    },
-    {
-      cat: "DevOps",
-      items: ["Vercel", "AWS", "Docker", "CI/CD"],
-      icon: Zap,
-      color: "from-emerald-500 to-teal-500",
-    },
-  ];
-  type AllowedColor = "violet" | "cyan" | "fuchsia" | "emerald";
-
-  const textGradient: Record<AllowedColor, string> = {
-    violet: "from-violet-400 to-violet-300",
-    cyan: "from-cyan-400 to-cyan-300",
-    fuchsia: "from-fuchsia-400 to-fuchsia-300",
-    emerald: "from-emerald-400 to-emerald-300",
-  };
-
-  const hoverGradient: Record<AllowedColor, string> = {
-    violet: "from-violet-500/20 to-transparent",
-    cyan: "from-cyan-500/20 to-transparent",
-    fuchsia: "from-fuchsia-500/20 to-transparent",
-    emerald: "from-emerald-500/20 to-transparent",
-  };
-  const experiences = [
-    {
-      company: "Velorona LLC",
-      role: "Senior Frontend Engineer",
-      period: "Aug 2023 - Present",
-      location: "Remote",
-      color: "from-violet-600 to-fuchsia-600",
-      highlights: [
-        "Led enterprise CRM handling 10,000+ transactions/month",
-        "Built reporting dashboards reducing manual work by 80%",
-        "Achieved 95+ Lighthouse scores with CI/CD pipelines",
-        "Boosted lead conversions by 65% through marketing site",
-      ],
-    },
-    {
-      company: "Ekbana Solutions",
-      role: "Frontend Engineer",
-      period: "2022 - 2023",
-      location: "Lalitpur, Nepal",
-      color: "from-cyan-600 to-blue-600",
-      highlights: [
-        "Developed Vue.js apps for Japanese clients",
-        "Migrated Vue 2 to Vue 3 with Composition API",
-        "Built custom Twilio calling feature for Basestation",
-      ],
-    },
-    {
-      company: "S.B Solutions",
-      role: "Frontend Developer",
-      period: "2021 - 2022",
-      location: "Kathmandu, Nepal",
-      color: "from-orange-600 to-red-600",
-      highlights: [
-        "Built UI for enterprise banking platforms",
-        "Created modular components in Angular & React",
-        "Collaborated in Agile sprints with QA cycles",
-      ],
-    },
-  ];
-
-  const projects = [
-    {
-      name: "Eeshan Mahadev",
-      desc: "Full-stack ecommerce with Stripe payments & real-time inventory",
-      tech: ["Next.js", "Prisma", "Stripe"],
-      gradient: "from-pink-500 via-rose-500 to-orange-500",
-      emoji: "🛒",
-    },
-    {
-      name: "Drishti CRM",
-      desc: "SaaS dashboard with analytics & lead tracking",
-      tech: ["Next.js", "ShadCN", "Recharts"],
-      gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
-      emoji: "📊",
-    },
-    {
-      name: "Kurama (कुरामा)",
-      desc: "Real-time chat with typing indicators & presence",
-      tech: ["Next.js", "Supabase", "Zustand"],
-      gradient: "from-cyan-500 via-blue-500 to-indigo-500",
-      emoji: "💬",
-    },
-    {
-      name: "Sajilo Bazaar",
-      desc: "Cross-platform mobile marketplace app",
-      tech: ["React Native", "Expo", "Supabase"],
-      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
-      emoji: "📱",
-    },
-  ];
 
   return (
     <div className="bg-black text-white min-h-screen font-sans antialiased overflow-x-hidden">
@@ -586,6 +478,88 @@ export default function Portfolio() {
                 {skill}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+      {/* Hobbies */}
+      <section id="hobbies" className="py-32 px-6 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text tracking-widest mb-4">
+              BEYOND CODE
+            </p>
+            <h2 className="text-4xl md:text-5xl font-bold">
+              Hobbies &{" "}
+              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-400 bg-clip-text">
+                Interests
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Trekking */}
+            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
+                <div className="text-6xl mb-6">🏔️</div>
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-4">
+                  Trekking & Travel
+                </h3>
+                <p className="text-zinc-400 mb-6 leading-relaxed">
+                  Exploring the mountains and cultures of Southeast Asia. From
+                  the temples of Thailand to the peaks of the Himalayas, I find
+                  inspiration in discovering new places and challenging myself
+                  on the trails.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Thailand Adventures",
+                    "Mountain Trails",
+                    "Photography",
+                    "Cultural Exploration",
+                  ].map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Cooking */}
+            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
+                <div className="text-6xl mb-6">👨‍🍳</div>
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent mb-4">
+                  Cooking & Culinary Arts
+                </h3>
+                <p className="text-zinc-400 mb-6 leading-relaxed">
+                  Passionate about experimenting with flavors and creating
+                  delicious dishes. From traditional Nepali cuisine to
+                  international recipes, cooking is my creative outlet beyond
+                  the code.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Recipe Experiments",
+                    "Asian Cuisine",
+                    "Food Photography",
+                    "Flavor Innovation",
+                  ].map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 text-xs rounded-full bg-orange-500/10 text-orange-300 border border-orange-500/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
