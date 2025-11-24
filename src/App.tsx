@@ -496,21 +496,90 @@ export default function Portfolio() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Trekking */}
-            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
+          {/* Trekking Section */}
+          <div className="mb-16">
+            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
-                <div className="text-6xl mb-6">🏔️</div>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-                  Trekking & Travel
-                </h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed">
-                  Exploring the mountains and cultures of Southeast Asia. From
-                  the temples of Thailand to the peaks of the Himalayas, I find
-                  inspiration in discovering new places and challenging myself
-                  on the trails.
-                </p>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-6xl">🏔️</div>
+                  <div>
+                    <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+                      Trekking & Travel
+                    </h3>
+                    <p className="text-zinc-400 mt-2">
+                      Exploring the mountains and cultures of Southeast Asia
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  {/* Image placeholders - replace src with your actual images */}
+                  {[
+                    {
+                      type: "image",
+                      src: "/path-to-trek-1.jpg",
+                      alt: "Trekking in Thailand",
+                    },
+                    {
+                      type: "video",
+                      src: "/path-to-trek-video.mp4",
+                      alt: "Mountain trail video",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-trek-2.jpg",
+                      alt: "Temple exploration",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-trek-3.jpg",
+                      alt: "Mountain peak",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-trek-4.jpg",
+                      alt: "Cultural site",
+                    },
+                    {
+                      type: "video",
+                      src: "/path-to-trek-video-2.mp4",
+                      alt: "Adventure moment",
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-emerald-500/50 transition-all duration-300 hover:scale-105 cursor-pointer group/item"
+                    >
+                      {item.type === "image" ? (
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <video
+                          src={item.src}
+                          className="w-full h-full object-cover"
+                          loop
+                          muted
+                          playsInline
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity flex items-end p-4">
+                        <p className="text-white text-sm font-medium">
+                          {item.alt}
+                        </p>
+                      </div>
+                      {item.type === "video" && (
+                        <div className="absolute top-2 right-2 px-2 py-1 rounded-md bg-black/70 text-xs text-white">
+                          VIDEO
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
                 <div className="flex flex-wrap gap-2">
                   {[
                     "Thailand Adventures",
@@ -528,21 +597,92 @@ export default function Portfolio() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Cooking */}
-            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
+          {/* Cooking Section */}
+          <div className="mb-16">
+            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
-                <div className="text-6xl mb-6">👨‍🍳</div>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent mb-4">
-                  Cooking & Culinary Arts
-                </h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed">
-                  Passionate about experimenting with flavors and creating
-                  delicious dishes. From traditional Nepali cuisine to
-                  international recipes, cooking is my creative outlet beyond
-                  the code.
-                </p>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-6xl">👨‍🍳</div>
+                  <div>
+                    <h3 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                      Cooking & Culinary Arts
+                    </h3>
+                    <p className="text-zinc-400 mt-2">
+                      Creating delicious dishes and experimenting with flavors
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  {/* Image placeholders - replace src with your actual images */}
+                  {[
+                    {
+                      type: "image",
+                      src: "/path-to-food-1.jpg",
+                      alt: "Nepali cuisine",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-food-2.jpg",
+                      alt: "Cooking process",
+                    },
+                    {
+                      type: "video",
+                      src: "/path-to-cooking-video.mp4",
+                      alt: "Recipe tutorial",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-food-3.jpg",
+                      alt: "Plated dish",
+                    },
+                    {
+                      type: "video",
+                      src: "/path-to-cooking-video-2.mp4",
+                      alt: "Kitchen moments",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-food-4.jpg",
+                      alt: "Food presentation",
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-orange-500/50 transition-all duration-300 hover:scale-105 cursor-pointer group/item"
+                    >
+                      {item.type === "image" ? (
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <video
+                          src={item.src}
+                          className="w-full h-full object-cover"
+                          loop
+                          muted
+                          playsInline
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity flex items-end p-4">
+                        <p className="text-white text-sm font-medium">
+                          {item.alt}
+                        </p>
+                      </div>
+                      {item.type === "video" && (
+                        <div className="absolute top-2 right-2 px-2 py-1 rounded-md bg-black/70 text-xs text-white">
+                          VIDEO
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
                 <div className="flex flex-wrap gap-2">
                   {[
                     "Recipe Experiments",
@@ -553,6 +693,109 @@ export default function Portfolio() {
                     <span
                       key={i}
                       className="px-3 py-1 text-xs rounded-full bg-orange-500/10 text-orange-300 border border-orange-500/20"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Fitness Section */}
+          <div>
+            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-pink-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-6xl">💪</div>
+                  <div>
+                    <h3 className="text-3xl font-bold bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">
+                      Fitness & Gym
+                    </h3>
+                    <p className="text-zinc-400 mt-2">
+                      Building strength and maintaining a healthy lifestyle
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-4 mb-6">
+                  {/* Image placeholders - replace src with your actual images */}
+                  {[
+                    {
+                      type: "image",
+                      src: "/path-to-gym-1.jpg",
+                      alt: "Workout session",
+                    },
+                    {
+                      type: "video",
+                      src: "/path-to-gym-video.mp4",
+                      alt: "Training routine",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-gym-2.jpg",
+                      alt: "Strength training",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-gym-3.jpg",
+                      alt: "Gym progress",
+                    },
+                    {
+                      type: "image",
+                      src: "/path-to-gym-4.jpg",
+                      alt: "Fitness goals",
+                    },
+                    {
+                      type: "video",
+                      src: "/path-to-gym-video-2.mp4",
+                      alt: "Workout highlights",
+                    },
+                  ].map((item, i) => (
+                    <div
+                      key={i}
+                      className="relative aspect-square rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-red-500/50 transition-all duration-300 hover:scale-105 cursor-pointer group/item"
+                    >
+                      {item.type === "image" ? (
+                        <img
+                          src={item.src}
+                          alt={item.alt}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <video
+                          src={item.src}
+                          className="w-full h-full object-cover"
+                          loop
+                          muted
+                          playsInline
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity flex items-end p-4">
+                        <p className="text-white text-sm font-medium">
+                          {item.alt}
+                        </p>
+                      </div>
+                      {item.type === "video" && (
+                        <div className="absolute top-2 right-2 px-2 py-1 rounded-md bg-black/70 text-xs text-white">
+                          VIDEO
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Strength Training",
+                    "Consistency",
+                    "Health Goals",
+                    "Fitness Journey",
+                  ].map((tag, i) => (
+                    <span
+                      key={i}
+                      className="px-3 py-1 text-xs rounded-full bg-red-500/10 text-red-300 border border-red-500/20"
                     >
                       {tag}
                     </span>
