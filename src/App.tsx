@@ -1,647 +1,390 @@
 import {
-  ArrowRight,
-  ChevronDown,
-  DownloadCloudIcon,
-  ExternalLink,
+  Download,
   Github,
   Linkedin,
   Mail,
-  Menu,
+  MapPin,
   Phone,
-  X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  AllowedColor,
-  experiences,
-  hoverGradient,
-  projects,
-  skills,
-  textGradient,
+  education,
+  personalNotes,
+  selectedProjects,
+  skillsInventory,
+  workExperience,
 } from "./lib/constants";
 
 export default function Portfolio() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [activeExp, setActiveExp] = useState(0);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouse = (e: MouseEvent) =>
-      setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("mousemove", handleMouse);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("mousemove", handleMouse);
-    };
-  }, []);
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("maharjannimesh11@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
+  const handleCopyPhone = () => {
+    navigator.clipboard.writeText("+353899492139");
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 2000);
+  };
 
   return (
-    <div className="bg-black text-white min-h-screen font-sans antialiased overflow-x-hidden">
-      {/* Animated background */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-900/20 via-black to-black" />
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-500/30 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-fuchsia-500/30 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 w-[800px] h-[800px] bg-cyan-500/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "2s" }}
-        />
-        {/* Grid overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
-      </div>
-
-      {/* Cursor glow */}
-      <div
-        className="fixed pointer-events-none z-50 transition-transform duration-100"
-        style={{ left: mousePos.x - 200, top: mousePos.y - 200 }}
-      >
-        <div className="w-[400px] h-[400px] bg-violet-500/10 rounded-full blur-3xl" />
-      </div>
-
-      {/* Navigation */}
-      <nav
-        className={`fixed top-0 w-full z-40 transition-all duration-500 ${
-          scrollY > 50
-            ? "bg-black/80 backdrop-blur-2xl border-b border-white/10"
-            : ""
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <a href="#" className="relative group">
-            <span className="text-2xl font-black bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
-              NM
+    <div className="min-h-screen bg-[#0c0d12] text-[#e4e6ee] font-sans antialiased selection:bg-[#262838] selection:text-white">
+      {/* Centered clean container */}
+      <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24 space-y-20">
+        {/* ===================== HEADER & INTRO ===================== */}
+        <header className="space-y-7">
+          <div className="flex items-center justify-between text-xs font-mono text-zinc-500">
+            <span className="flex items-center gap-1.5 text-zinc-400">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              Dublin, Ireland
             </span>
-            <span className="absolute -inset-2 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-lg blur opacity-0 group-hover:opacity-50 transition-opacity" />
-          </a>
-          <div className="hidden md:flex gap-1">
-            {["About", "Experience", "Projects", "Skills", "Contact"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="px-4 py-2 text-base font-funnel-sans text-zinc-400 hover:text-white rounded-full hover:bg-white/5 transition-all duration-300"
-                >
-                  {item}
-                </a>
-              )
-            )}
-          </div>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg bg-white/5 text-white"
-          >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-        {menuOpen && (
-          <div className="md:hidden bg-black/95 backdrop-blur-2xl border-t border-white/10">
-            {["About", "Experience", "Projects", "Skills", "Contact"].map(
-              (item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  onClick={() => setMenuOpen(false)}
-                  className="block px-6 py-4 text-zinc-400 hover:text-white hover:bg-white/5 transition-all"
-                >
-                  {item}
-                </a>
-              )
-            )}
-          </div>
-        )}
-      </nav>
-
-      {/* Hero */}
-      <section className="min-h-screen flex items-center justify-center relative px-6 pt-20">
-        <div className="relative text-center max-w-5xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-violet-500/10 to-fuchsia-500/10 border border-violet-500/20 text-sm text-violet-300 mb-8 backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-            </span>
-            Available for opportunities
+            <span>2026 Portfolio</span>
           </div>
 
-          <h1 className="font-funnel-sans text-6xl md:text-8xl font-black mb-6 leading-none tracking-tight">
-            <span className="block text-white">NIMESH</span>
-            <span className="block bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
-              MAHARJAN
-            </span>
-          </h1>
-
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="h-px w-12 bg-gradient-to-r from-transparent to-violet-500" />
-            <p className="font-funnel-sans text-xl md:text-2xl font-light text-zinc-400 tracking-widest uppercase">
-              Senior Frontend Engineer
+          <div className="space-y-4">
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+              Nimesh Maharjan
+            </h1>
+            <p className="text-lg text-zinc-300 font-serif italic">
+              Frontend software engineer crafting fast, resilient web applications.
             </p>
-            <span className="h-px w-12 bg-gradient-to-l from-transparent to-fuchsia-500" />
+            <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-2xl font-light">
+              I have 4+ years of experience building production interfaces with{" "}
+              <span className="text-zinc-200 font-normal">React, Next.js, and TypeScript</span>.
+              My background spans designing enterprise CRM modules at Velorona, automating
+              institutional systems at NCAD, and migrating complex Vue apps. Currently pursuing an{" "}
+              <span className="text-zinc-200 font-normal">MSc in Interactive Digital Media</span> at
+              Griffith College Dublin.
+            </p>
           </div>
 
-          <p className="text-lg text-zinc-500 max-w-2xl mx-auto mb-8 leading-relaxed">
-            Crafting <span className="text-violet-400">high-performance</span>{" "}
-            web experiences that scale. Specialized in{" "}
-            <span className="text-cyan-400">React</span>,{" "}
-            <span className="text-fuchsia-400">Next.js</span>, and building
-            products users love.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <a
-              href="#contact"
-              className="group relative font-funnel-sans px-8 py-4 bg-gradient-to-r from-violet-600 to-fuchsia-600 rounded-full font-semibold overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/25"
+          {/* Quick contact / social links */}
+          <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-zinc-400">
+            <button
+              onClick={handleCopyEmail}
+              className="hover:text-white transition-colors flex items-center gap-1.5 underline underline-offset-4 decoration-zinc-700 hover:decoration-zinc-300"
             >
-              <span className="relative z-10 flex items-center gap-2">
-                Let's Talk{" "}
-                <ArrowRight
-                  size={18}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </span>
-              <span className="absolute inset-0 bg-gradient-to-r from-fuchsia-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Mail size={13} />
+              <span>{copiedEmail ? "Copied email!" : "maharjannimesh11@gmail.com"}</span>
+            </button>
+
+            <span className="text-zinc-700">•</span>
+
+            <button
+              onClick={handleCopyPhone}
+              className="hover:text-white transition-colors flex items-center gap-1.5 underline underline-offset-4 decoration-zinc-700 hover:decoration-zinc-300"
+            >
+              <Phone size={13} />
+              <span>{copiedPhone ? "Copied phone!" : "+353 89 949 2139"}</span>
+            </button>
+
+            <span className="text-zinc-700">•</span>
+
+            <a
+              href="https://linkedin.com/in/nimesh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1"
+            >
+              <Linkedin size={13} />
+              <span>LinkedIn</span>
             </a>
+
+            <span className="text-zinc-700">•</span>
+
+            <a
+              href="https://github.com/nimeshmaharjan1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1"
+            >
+              <Github size={13} />
+              <span>GitHub</span>
+            </a>
+
+            <span className="text-zinc-700">•</span>
+
             <a
               href="/Nimesh_Maharjan_CV.pdf"
-              download
-              className="px-8 font-funnel-sans py-4 rounded-full font-semibold border border-white/20 hover:bg-white/5 hover:border-white/40 transition-all duration-300 backdrop-blur-sm flex items-center gap-2"
+              download="Nimesh_Maharjan_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors flex items-center gap-1 text-zinc-300 font-medium"
             >
-              Download CV
-              <DownloadCloudIcon size={18} />
+              <Download size={13} />
+              <span>Resume (.pdf)</span>
             </a>
           </div>
+        </header>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            {[
-              { n: "4+", l: "Years Exp", color: "violet" },
-              { n: "10K+", l: "Trans/Month", color: "cyan" },
-              { n: "95+", l: "Lighthouse", color: "fuchsia" },
-              { n: "80%", l: "Efficiency", color: "emerald" },
-            ].map((s, i) => (
-              <div
-                key={i}
-                className="group relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden"
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition ${
-                    hoverGradient[s.color as AllowedColor]
-                  }`}
-                ></div>
-                <p
-                  className={`text-4xl font-black bg-gradient-to-r ${
-                    textGradient[s.color as AllowedColor]
-                  } bg-clip-text text-transparent`}
-                >
-                  {s.n}
+        {/* ===================== WORK EXPERIENCE ===================== */}
+        <section className="space-y-8">
+          <div className="border-b border-white/[0.08] pb-3 flex items-baseline justify-between">
+            <h2 className="text-sm font-mono uppercase tracking-widest text-zinc-400">
+              01 / Experience
+            </h2>
+            <span className="text-xs font-mono text-zinc-600">4+ Years Total</span>
+          </div>
+
+          <div className="space-y-12">
+            {workExperience.map((job, idx) => (
+              <article key={idx} className="space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 text-sm">
+                  <div>
+                    <h3 className="font-semibold text-white inline">
+                      {job.role}
+                    </h3>
+                    <span className="text-zinc-500 mx-2">at</span>
+                    <span className="text-zinc-300">{job.company}</span>
+                  </div>
+                  <span className="text-xs font-mono text-zinc-500 whitespace-nowrap">
+                    {job.period}
+                  </span>
+                </div>
+
+                <div className="text-xs font-mono text-zinc-500 flex items-center gap-1">
+                  <MapPin size={11} /> {job.location}
+                </div>
+
+                {/* Narrative description */}
+                <p className="text-sm text-zinc-300 leading-relaxed font-light">
+                  {job.narrative}
                 </p>
-                <p className="text-xs text-zinc-500 uppercase tracking-wider mt-1">
-                  {s.l}
-                </p>
-              </div>
+
+                {/* Bullets */}
+                <ul className="space-y-1.5 pt-1">
+                  {job.points.map((point, pIdx) => (
+                    <li
+                      key={pIdx}
+                      className="text-xs sm:text-sm text-zinc-400 leading-relaxed flex items-start gap-2.5"
+                    >
+                      <span className="text-zinc-600 mt-1 select-none font-mono text-xs">
+                        —
+                      </span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Tech tags */}
+                <div className="flex flex-wrap gap-1.5 pt-2">
+                  {job.stack.map((t, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] text-zinc-400 border border-white/[0.05]"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </article>
             ))}
           </div>
-        </div>
-        <a
-          href="#about"
-          className="absolute bottom-10 right-12 -translate-x-1/2 p-2 rounded-full border border-white/20 text-zinc-500 animate-bounce hover:text-white hover:border-white/40 transition-colors"
-        >
-          <ChevronDown size={24} />
-        </a>
-      </section>
+        </section>
 
-      {/* About */}
-      <section id="about" className="py-32 px-6 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <div className="absolute -top-4 -left-4 w-24 h-24 border-l-2 border-t-2 border-violet-500/50" />
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 border-r-2 border-b-2 border-fuchsia-500/50" />
-              <div className="relative p-8 bg-gradient-to-br from-white/5 to-white/0 rounded-3xl border border-white/10 backdrop-blur-sm">
-                <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text tracking-widest mb-4">
-                  ABOUT ME
-                </p>
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                  Building the{" "}
-                  <span className="text-transparent bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text">
-                    future
-                  </span>{" "}
-                  of web
-                </h2>
-                <div className="space-y-4 text-zinc-400 leading-relaxed">
-                  <p>
-                    Senior Frontend Engineer with{" "}
-                    <span className="text-white font-medium">4+ years</span> of
-                    experience building enterprise-grade applications that
-                    handle{" "}
-                    <span className="text-violet-400 font-medium">
-                      thousands of transactions daily
-                    </span>
-                    .
-                  </p>
-                  <p>
-                    Currently leading frontend development at{" "}
-                    <span className="text-fuchsia-400 font-semibold">
-                      Velorona LLC
-                    </span>
-                    , architecting scalable CRM solutions with modern React
-                    ecosystem.
-                  </p>
-                  <p>
-                    BSc in Computing from Islington College. Passionate about{" "}
-                    <span className="text-cyan-400 font-medium">
-                      performance
-                    </span>
-                    ,{" "}
-                    <span className="text-purple-400 font-medium">
-                      accessibility
-                    </span>
-                    , and delightful user experiences.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {skills.map(({ cat, items, icon: Icon, color }, i) => (
-                <div
-                  key={i}
-                  className="group relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all duration-500 overflow-hidden hover:-translate-y-1"
-                >
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-                  />
-                  <div
-                    className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${color} mb-4`}
-                  >
-                    <Icon size={20} className="text-white" />
-                  </div>
-                  <h3 className="font-bold text-white mb-3">{cat}</h3>
-                  <div className="flex flex-wrap gap-1">
-                    {items.slice(0, 3).map((s, j) => (
-                      <span
-                        key={j}
-                        className="px-2 py-1 text-xs rounded-md bg-white/5 text-zinc-400"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                    {items.length > 3 && (
-                      <span className="px-2 py-1 text-xs rounded-md bg-white/5 text-zinc-500">
-                        +{items.length - 3}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Experience */}
-      <section id="experience" className="py-32 px-6 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-violet-900/10 via-transparent to-fuchsia-900/10" />
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text tracking-widest mb-4">
-              CAREER JOURNEY
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Where I've{" "}
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-400 bg-clip-text">
-                Worked
-              </span>
+        {/* ===================== SELECTED PROJECTS ===================== */}
+        <section className="space-y-8">
+          <div className="border-b border-white/[0.08] pb-3 flex items-baseline justify-between">
+            <h2 className="text-sm font-mono uppercase tracking-widest text-zinc-400">
+              02 / Selected Projects
             </h2>
+            <span className="text-xs font-mono text-zinc-600">Production & Open Work</span>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            {/* Timeline tabs */}
-            <div className="lg:w-64 flex lg:flex-col gap-2 overflow-x-auto pb-4 lg:pb-0">
-              {experiences.map((exp, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveExp(i)}
-                  className={`relative px-6 py-4 rounded-xl text-left whitespace-nowrap transition-all duration-300 ${
-                    activeExp === i
-                      ? "bg-white/10 border border-white/20"
-                      : "hover:bg-white/5"
-                  }`}
-                >
-                  {activeExp === i && (
-                    <span
-                      className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r bg-gradient-to-b ${exp.color}`}
-                    />
-                  )}
-                  <p
-                    className={`font-semibold ${
-                      activeExp === i ? "text-white" : "text-zinc-500"
-                    }`}
-                  >
-                    {exp.company}
-                  </p>
-                  <p className="text-xs text-zinc-600">{exp.period}</p>
-                </button>
-              ))}
-            </div>
-
-            {/* Content */}
-            <div className="flex-1 p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+          <div className="grid sm:grid-cols-2 gap-6">
+            {selectedProjects.map((p, idx) => (
               <div
-                className={`inline-flex px-3 py-1 rounded-full bg-gradient-to-r ${experiences[activeExp].color} text-sm font-medium mb-4`}
+                key={idx}
+                className="p-5 rounded-2xl bg-[#12131a] border border-white/[0.07] hover:border-white/[0.18] transition-all flex flex-col justify-between space-y-4"
               >
-                {experiences[activeExp].location}
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-2">
-                {experiences[activeExp].role}
-              </h3>
-              <p
-                className={`text-lg font-semibold bg-gradient-to-r ${experiences[activeExp].color} bg-clip-text text-transparent mb-6`}
-              >
-                {experiences[activeExp].company}
-              </p>
-              <ul className="space-y-4">
-                {experiences[activeExp].highlights.map((h, j) => (
-                  <li key={j} className="flex items-start gap-3 text-zinc-400">
-                    <span
-                      className={`mt-2 w-2 h-2 rounded-full bg-gradient-to-r ${experiences[activeExp].color} flex-shrink-0`}
-                    />
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects */}
-      <section id="projects" className="py-32 px-6 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text tracking-widest mb-4">
-              SHOWCASE
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Featured{" "}
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text">
-                Projects
-              </span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((p, i) => (
-              <div
-                key={i}
-                className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-violet-500/10"
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${p.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500`}
-                />
-                <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm h-full">
-                  <div className="flex items-start justify-between mb-6">
-                    <span className="text-4xl">{p.emoji}</span>
-                    <ExternalLink
-                      size={20}
-                      className="text-zinc-600 group-hover:text-white transition-colors"
-                    />
+                <div className="space-y-2.5">
+                  <div className="flex items-baseline justify-between text-xs font-mono text-zinc-500">
+                    <span>{p.year}</span>
+                    <span className="text-zinc-400">{p.role}</span>
                   </div>
-                  <h3
-                    className={`text-2xl font-bold bg-gradient-to-r ${p.gradient} bg-clip-text text-transparent mb-3`}
-                  >
-                    {p.name}
+
+                  <h3 className="font-semibold text-white text-base">
+                    {p.title}
                   </h3>
-                  <p className="text-zinc-400 mb-6">{p.desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {p.tech.map((t, j) => (
-                      <span
-                        key={j}
-                        className="px-3 py-1 text-xs rounded-full bg-white/10 text-zinc-300 border border-white/10"
-                      >
-                        {t}
-                      </span>
-                    ))}
+
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-light">
+                    {p.description}
+                  </p>
+
+                  <p className="text-xs text-zinc-400 leading-relaxed italic border-l-2 border-zinc-700 pl-3">
+                    {p.takeaway}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-1 pt-2 border-t border-white/[0.05]">
+                  {p.stack.map((t, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.03] text-zinc-400"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===================== TECHNICAL SKILLS ===================== */}
+        <section className="space-y-8">
+          <div className="border-b border-white/[0.08] pb-3 flex items-baseline justify-between">
+            <h2 className="text-sm font-mono uppercase tracking-widest text-zinc-400">
+              03 / Technical Skills
+            </h2>
+            <span className="text-xs font-mono text-zinc-600">Day-to-day tools</span>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {skillsInventory.map((cat, idx) => (
+              <div key={idx} className="space-y-2.5">
+                <h3 className="text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                  {cat.category}
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {cat.items.map((item, iIdx) => (
+                    <span
+                      key={iIdx}
+                      className="text-xs font-mono px-2.5 py-1 rounded-md bg-[#12131a] border border-white/[0.06] text-zinc-300 hover:border-zinc-500 transition-colors"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===================== EDUCATION ===================== */}
+        <section className="space-y-8">
+          <div className="border-b border-white/[0.08] pb-3 flex items-baseline justify-between">
+            <h2 className="text-sm font-mono uppercase tracking-widest text-zinc-400">
+              04 / Education
+            </h2>
+            <span className="text-xs font-mono text-zinc-600">Dublin & London</span>
+          </div>
+
+          <div className="space-y-8">
+            {education.map((edu, idx) => (
+              <div key={idx} className="space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 text-sm">
+                  <div>
+                    <h3 className="font-semibold text-white inline">
+                      {edu.degree}
+                    </h3>
+                    <span className="text-zinc-500 mx-2">—</span>
+                    <span className="text-zinc-300">{edu.institution}</span>
                   </div>
+                  <span className="text-xs font-mono text-zinc-500">
+                    {edu.period}
+                  </span>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Skills Detail */}
-      <section id="skills" className="py-32 px-6 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/10 via-transparent to-violet-900/10" />
-        <div className="max-w-7xl mx-auto relative">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text tracking-widest mb-4">
-              TECH STACK
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Skills &{" "}
-              <span className="text-transparent bg-gradient-to-r from-fuchsia-400 to-cyan-400 bg-clip-text">
-                Expertise
-              </span>
-            </h2>
-          </div>
+                <div className="text-xs font-mono text-zinc-400 flex items-center gap-2">
+                  <span>{edu.location}</span>
+                  {edu.grade && (
+                    <>
+                      <span>•</span>
+                      <span className="text-zinc-200 font-semibold">{edu.grade}</span>
+                    </>
+                  )}
+                </div>
 
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              "Next.js",
-              "React",
-              "Vue.js",
-              "TypeScript",
-              "TailwindCSS",
-              "Redux",
-              "Zustand",
-              "GraphQL",
-              "Node.js",
-              "Prisma",
-              "Supabase",
-              "PostgreSQL",
-              "Vercel",
-              "AWS",
-              "Docker",
-              "Figma",
-              "Jest",
-              "Cypress",
-            ].map((skill, i) => (
-              <span
-                key={i}
-                className="px-5 py-3 rounded-full bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 cursor-default text-zinc-300 hover:text-white hover:scale-105"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Hobbies */}
-      <section id="hobbies" className="py-32 px-6 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text tracking-widest mb-4">
-              BEYOND CODE
-            </p>
-            <h2 className="text-4xl md:text-5xl font-bold">
-              Hobbies &{" "}
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 to-fuchsia-400 bg-clip-text">
-                Interests
-              </span>
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Trekking */}
-            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
-                <div className="text-6xl mb-6">🏔️</div>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-4">
-                  Trekking & Travel
-                </h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed">
-                  Exploring the mountains and cultures of Southeast Asia. From
-                  the temples of Thailand to the peaks of the Himalayas, I find
-                  inspiration in discovering new places and challenging myself
-                  on the trails.
+                <p className="text-sm text-zinc-300 leading-relaxed font-light">
+                  {edu.summary}
                 </p>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Thailand Adventures",
-                    "Mountain Trails",
-                    "Photography",
-                    "Cultural Exploration",
-                  ].map((tag, i) => (
+
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {edu.details.map((d, dIdx) => (
                     <span
-                      key={i}
-                      className="px-3 py-1 text-xs rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                      key={dIdx}
+                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.03] text-zinc-400 border border-white/[0.05]"
                     >
-                      {tag}
+                      {d}
                     </span>
                   ))}
                 </div>
               </div>
-            </div>
-
-            {/* Cooking */}
-            <div className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2">
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative p-8 bg-white/5 border border-white/10 group-hover:border-white/20 rounded-3xl backdrop-blur-sm">
-                <div className="text-6xl mb-6">👨‍🍳</div>
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent mb-4">
-                  Cooking & Culinary Arts
-                </h3>
-                <p className="text-zinc-400 mb-6 leading-relaxed">
-                  Passionate about experimenting with flavors and creating
-                  delicious dishes. From traditional Nepali cuisine to
-                  international recipes, cooking is my creative outlet beyond
-                  the code.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Recipe Experiments",
-                    "Asian Cuisine",
-                    "Food Photography",
-                    "Flavor Innovation",
-                  ].map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 text-xs rounded-full bg-orange-500/10 text-orange-300 border border-orange-500/20"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contact */}
-      <section id="contact" className="py-32 px-6 relative">
-        <div className="max-w-4xl mx-auto text-center relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 rounded-full blur-3xl" />
-          <div className="relative">
-            <p className="text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text tracking-widest mb-4">
-              GET IN TOUCH
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
-              Let's Build Something{" "}
-              <span className="text-transparent bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400 bg-clip-text">
-                Amazing
-              </span>
+        {/* ===================== PERSONAL NOTES / BEYOND CODE ===================== */}
+        <section className="space-y-8">
+          <div className="border-b border-white/[0.08] pb-3 flex items-baseline justify-between">
+            <h2 className="text-sm font-mono uppercase tracking-widest text-zinc-400">
+              05 / Personal Notes
             </h2>
-            <p className="text-xl text-zinc-400 mb-12 max-w-2xl mx-auto">
-              Ready to bring your ideas to life. Let's connect and create
-              something extraordinary together.
-            </p>
+            <span className="text-xs font-mono text-zinc-600">Beyond the editor</span>
+          </div>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
-              <a
-                href="mailto:nimesh.maharjan.education@gmail.com"
-                className="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-violet-500/25"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-3 font-semibold">
-                  <Mail size={20} />
-                  nimesh.maharjan.education@gmail.com
-                </span>
-              </a>
-              <a
-                href="tel:+977-9843323200"
-                className="flex items-center justify-center gap-3 px-8 py-4 rounded-2xl border border-white/20 hover:bg-white/5 hover:border-white/40 transition-all duration-300 font-semibold"
-              >
-                <Phone size={20} />
-                +977-9843323200
-              </a>
+          <div className="space-y-6">
+            {personalNotes.map((item, idx) => (
+              <div key={idx} className="space-y-1.5">
+                <h3 className="text-sm font-semibold text-zinc-200">
+                  {item.topic}
+                </h3>
+                <p className="text-sm text-zinc-400 leading-relaxed font-light">
+                  {item.note}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ===================== FOOTER & CONTACT ===================== */}
+        <footer className="pt-16 pb-12 border-t border-white/[0.08] space-y-8 text-sm text-zinc-400 font-light">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+            <div className="space-y-1">
+              <p className="text-zinc-200 font-medium text-base">Let's connect</p>
+              <p className="text-xs text-zinc-400 font-mono">
+                Open to frontend opportunities in Dublin, Ireland & remote teams.
+              </p>
             </div>
 
-            <div className="flex justify-center gap-4">
-              {[
-                { icon: Github, href: "https://github.com/nimeshmaharjan1" },
-                { icon: Linkedin, href: "https://linkedin.com/in/nimesh" },
-              ].map(({ icon: Icon, href }, i) => (
-                <a
-                  key={i}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/30 hover:bg-white/10 transition-all duration-300 hover:scale-110"
-                >
-                  <Icon size={24} />
-                </a>
-              ))}
+            <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
+              <a
+                href="mailto:maharjannimesh11@gmail.com"
+                className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-700 hover:decoration-zinc-300"
+              >
+                Email
+              </a>
+              <span className="text-zinc-700">•</span>
+              <a
+                href="https://linkedin.com/in/nimesh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-700 hover:decoration-zinc-300"
+              >
+                LinkedIn
+              </a>
+              <span className="text-zinc-700">•</span>
+              <a
+                href="https://nimesh-maharjan.com.np"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors underline underline-offset-4 decoration-zinc-700 hover:decoration-zinc-300"
+              >
+                nimesh-maharjan.com.np
+              </a>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-8 px-6 border-t border-white/10 relative">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4 text-sm text-zinc-500">
-          <p>© 2025 Nimesh Maharjan</p>
-          {/* <p className="flex items-center gap-2">
-            Built with <span className="text-red-500">♥</span> using Next.js &
-            TailwindCSS
-          </p> */}
-        </div>
-      </footer>
-
-      <style>{`
-        @keyframes gradient {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        .animate-gradient {
-          animation: gradient 3s ease infinite;
-        }
-      `}</style>
+          <p className="text-xs font-mono text-zinc-500 pt-2 border-t border-white/[0.05]">
+            © 2026 Nimesh Maharjan • Handcrafted with React, Next.js conventions & Tailwind CSS
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
